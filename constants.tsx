@@ -13,54 +13,62 @@ export const CONTACT_EMAIL = "ABDETAHIR468@GMAIL.COM";
 export const PROJECTS: Project[] = [
   {
     id: 1,
-    title: "Viral Lifestyle Reel",
-    description: "High-energy edit with beat-syncing and motion graphics for a fitness creator.",
+    title: "The Velocity Edit",
+    description: "Aggressive pacing and bespoke transitions for high-impact lifestyle content.",
     thumbnail: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&q=80&w=600",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", 
-    category: "Reels"
+    category: "Viral Reels"
   },
   {
     id: 2,
-    title: "Product Showcase TikTok",
-    description: "Sleek, cinematic product reveal for a premium tech brand with sound design.",
+    title: "Bespoke Aesthetics",
+    description: "Premium product showcase utilizing dynamic masking and custom 3D typography.",
     thumbnail: "https://images.unsplash.com/photo-1492691523567-6239f2990671?auto=format&fit=crop&q=80&w=600",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "TikTok"
+    category: "Brand TikTok"
   },
   {
     id: 3,
-    title: "Motivational Short",
-    description: "Story-driven edit featuring impactful subtitles and cinematic grading.",
+    title: "Narrative Short",
+    description: "Emotionally charged storytelling with advanced soundscapes and color grading.",
     thumbnail: "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&q=80&w=600",
     videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "Shorts"
+    category: "YouTube Shorts"
+  },
+  {
+    id: 4,
+    title: "Retention Master",
+    description: "Complex fast-cuts designed to maximize algorithmic watch-time averages.",
+    thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=600",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "Algorithm King"
   }
 ];
 
 export const SERVICES: Service[] = [
   {
     id: 1,
-    title: "Short-Form Specialist",
-    description: "Optimized pacing for Reels, Shorts, and TikTok to keep retention above 80%.",
-    icon: <Smartphone className="w-8 h-8 text-blue-400" />
+    title: "Retention Analysis",
+    description: "Strategic editing based on retention data to ensure viewers stay until the end card.",
+    icon: <Smartphone className="w-8 h-8 text-indigo-400" />
   },
   {
     id: 2,
-    title: "Dynamic Subtitles",
-    description: "High-impact captions that make your content accessible and engaging on silent scroll.",
-    icon: <Zap className="w-8 h-8 text-yellow-400" />
+    title: "Kinetic Typography",
+    description: "Custom-animated captions that serve as visual hooks, not just subtitles.",
+    icon: <Zap className="w-8 h-8 text-white" />
   },
   {
     id: 3,
-    title: "Cinematic Grading",
-    description: "Premium color correction to give your smartphone footage a high-end camera look.",
-    icon: <Sparkles className="w-8 h-8 text-purple-400" />
+    title: "Creative Grading",
+    description: "Sophisticated color palettes tailored to the brand identity of each creator.",
+    icon: <Sparkles className="w-8 h-8 text-indigo-400" />
   },
   {
     id: 4,
-    title: "Viral Sound Design",
-    description: "Strategic SFX and music choices to trigger dopamine responses in viewers.",
-    icon: <Video className="w-8 h-8 text-pink-400" />
+    title: "Audio Engineering",
+    description: "Layered SFX and precision EQ to create an immersive, professional soundstage.",
+    icon: <Video className="w-8 h-8 text-white" />
   }
 ];
 
