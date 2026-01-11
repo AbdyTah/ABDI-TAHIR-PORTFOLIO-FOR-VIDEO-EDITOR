@@ -96,7 +96,7 @@ const App: React.FC = () => {
             </h1>
             
             <p className="max-w-xl mx-auto text-zinc-400 text-sm md:text-base mb-12 leading-relaxed tracking-wide font-medium">
-              I help you grow on social media with high-quality <span className="text-white">Reels, Shorts, and TikTok</span> edits.
+              I take your raw footage and turn it into polished <span className="text-white">Reels, Shorts, and TikToks.</span>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -277,4 +277,44 @@ const App: React.FC = () => {
             <p className="text-[9px] text-zinc-600 uppercase font-black tracking-widest mt-3">© {new Date().getFullYear()} – Professional Video Editing</p>
           </div>
           <div className="flex space-x-12">
-            {SOCIAL_LINKS
+            {SOCIAL_LINKS.filter(l => l.name !== 'Email').map(link => (
+              <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="text-[10px] font-black text-zinc-500 hover:text-white uppercase tracking-widest transition-colors">{link.name}</a>
+            ))}
+          </div>
+        </div>
+      </footer>
+
+      {/* Mobile Sidebar */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-[60] bg-black p-10 flex flex-col justify-center space-y-12">
+          <button onClick={() => setIsMenuOpen(false)} className="absolute top-10 right-10 text-zinc-500"><X size={32} /></button>
+          {navItems.map((item, idx) => (
+            <a 
+              key={item.label} 
+              href={`#${item.id}`} 
+              onClick={() => setIsMenuOpen(false)} 
+              className="text-6xl font-black uppercase tracking-tighter text-white hover:text-indigo-500 transition-colors"
+              style={{transitionDelay: `${idx * 0.1}s`}}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a 
+            href="#contact" 
+            onClick={() => setIsMenuOpen(false)} 
+            className="text-6xl font-black uppercase tracking-tighter text-indigo-500 hover:text-white transition-colors"
+          >
+            Hire Me
+          </a>
+          <div className="pt-10 border-t border-white/5 mt-auto">
+            <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-4">Let's Connect</p>
+            <span className="text-white text-lg font-bold block mb-2">{CONTACT_EMAIL}</span>
+            <span className="text-white text-lg font-bold block">{PHONE_NUMBER}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
