@@ -1,14 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight, Send, Mail, PlayCircle, Plus, Check, Phone } from 'lucide-react';
-import { PROJECTS, SERVICES, SOCIAL_LINKS, CONTACT_EMAIL, PHONE_NUMBER } from './constants';
+import { PROJECTS, SERVICES, SOCIAL_LINKS, CONTACT_EMAIL, PHONE_NUMBER, LOGO_URL } from './constants';
 
 const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isSent, setIsSent] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  // Initial loading delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Scroll reveal logic
   useEffect(() => {
+    if (isLoading) return;
+
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver(
       (entries) => {
@@ -30,7 +42,39 @@ const App: React.FC = () => {
       window.removeEventListener('scroll', handleScroll);
       reveals.forEach((reveal) => observer.unobserve(reveal));
     };
-  }, []);
+  }, [isLoading]);
+
+  // Smooth scroll handler with header offset
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Close mobile menu if it's open
+      if (isMenuOpen) setIsMenuOpen(false);
+    }
+  };
+
+  // Helper to convert YouTube watch URL to Embed URL
+  const getEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/watch?v=')) {
+      const id = url.split('v=')[1]?.split('&')[0];
+      return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&rel=0`;
+    }
+    if (url.includes('youtu.be/')) {
+      const id = url.split('youtu.be/')[1]?.split('?')[0];
+      return `https://www.youtube.com/embed/${id}?autoplay=1&mute=1&rel=0`;
+    }
+    return url;
+  };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     setIsSent(true);
@@ -43,14 +87,33 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen selection:bg-indigo-500/30">
+    <div className={`min-h-screen selection:bg-indigo-500/30 ${isLoading ? 'overflow-hidden max-h-screen' : ''}`}>
+      {/* Loading Indicator Overlay */}
+      <div 
+        className={`fixed inset-0 z-[200] bg-[#030303] flex flex-col items-center justify-center transition-all duration-1000 ${
+          isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="w-24 h-24 flex items-center justify-center animate-pulse drop-shadow-[0_0_30px_rgba(99,102,241,0.5)]">
+          <img src={LOGO_URL} alt="Abdy Tahir Logo" className="w-full h-full object-contain" />
+        </div>
+        <div className="mt-8 text-[10px] text-zinc-500 font-black uppercase tracking-[0.4em] animate-pulse">
+          Crafting Visuals
+        </div>
+        <div className="mt-4 w-32 h-[1px] bg-zinc-800 relative overflow-hidden">
+          <div className="absolute inset-0 bg-indigo-500 animate-loading-bar"></div>
+        </div>
+      </div>
+
       {/* Essential Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-4' : 'bg-transparent py-8'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center font-black text-xs text-white">AT</div>
-            <div className="flex flex-col">
-              <span className="text-lg font-black tracking-tighter text-white font-display uppercase leading-none">Abdy Tahir</span>
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 flex items-center justify-center overflow-hidden">
+              <img src={LOGO_URL} alt="Abdy Tahir Logo" className="w-full h-full object-contain transition-transform hover:scale-110 duration-500" />
+            </div>
+            <div className="flex flex-col pr-2">
+              <span className="inline-block text-lg font-black tracking-tighter text-white font-display uppercase leading-none pr-1">Abdy Tahir</span>
               <span className="text-[9px] text-zinc-500 uppercase tracking-[0.2em] font-bold tracking-widest">Video Editor</span>
             </div>
           </div>
@@ -60,6 +123,7 @@ const App: React.FC = () => {
               <a 
                 key={item.label} 
                 href={`#${item.id}`} 
+                onClick={(e) => scrollToSection(e, item.id)}
                 className="text-[11px] font-bold text-zinc-400 hover:text-white transition-all uppercase tracking-widest"
               >
                 {item.label}
@@ -67,6 +131,7 @@ const App: React.FC = () => {
             ))}
             <a 
               href="#contact" 
+              onClick={(e) => scrollToSection(e, 'contact')}
               className="px-8 py-3 rounded-full btn-premium btn-glow bg-indigo-600 text-white text-[11px] font-black uppercase tracking-[0.15em] shadow-xl hover:scale-105 active:scale-95 transition-all duration-300"
             >
               Hire Me
@@ -91,22 +156,35 @@ const App: React.FC = () => {
           <div className="reveal">
             <span className="inline-block text-[11px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 border-b border-zinc-800 pb-1">Video Editor & Content Creator</span>
             <h1 className="text-6xl md:text-[8rem] font-black mb-10 tracking-tighter text-white leading-[0.85] uppercase">
-              Your Clip. <br />
-              <span className="gradient-text italic">My Edit</span>
+              <span className="inline-block pr-4">Your Vision.</span> <br />
+              <span className="gradient-text italic inline-block pr-8 pb-2">My Edit.</span>
             </h1>
             
             <p className="max-w-xl mx-auto text-zinc-400 text-sm md:text-base mb-12 leading-relaxed tracking-wide font-medium">
               I take your raw footage and turn it into polished <span className="text-white">Reels, Shorts, and TikToks.</span>
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <a href="#work" className="group w-full sm:w-auto px-10 py-5 bg-white text-black rounded-full font-black uppercase tracking-widest text-xs flex items-center justify-center hover:bg-zinc-200 transition-all shadow-lg hover:shadow-white/10">
-                View My Work
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
-              </a>
-              <a href="#contact" className="w-full sm:w-auto px-10 py-5 glass rounded-full text-white font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all">
-                Let's Talk
-              </a>
+            <div className="flex flex-col items-center justify-center space-y-6">
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a 
+                  href="#work" 
+                  onClick={(e) => scrollToSection(e, 'work')}
+                  className="group w-full sm:w-auto px-10 py-5 bg-white text-black rounded-full font-black uppercase tracking-widest text-xs flex items-center justify-center hover:bg-zinc-200 transition-all shadow-lg hover:shadow-white/10"
+                >
+                  View My Work
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                </a>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => scrollToSection(e, 'contact')}
+                  className="w-full sm:w-auto px-10 py-5 glass rounded-full text-white font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all"
+                >
+                  Hire Me
+                </a>
+              </div>
+              <p className="text-zinc-500 text-[11px] uppercase tracking-[0.15em] font-medium opacity-80">
+                Have a video project in mind? Send me a message and I’ll reply quickly.
+              </p>
             </div>
           </div>
         </div>
@@ -117,13 +195,13 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Portfolio Section: Creative Grid */}
+      {/* Portfolio Section */}
       <section id="work" className="py-32 bg-[#050505]">
         <div className="container mx-auto px-6">
           <div className="reveal mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <p className="text-indigo-500 font-bold text-[10px] uppercase tracking-[0.4em] mb-4">Portfolio</p>
-              <h2 className="text-5xl font-black uppercase tracking-tighter text-white leading-none">Recent Work</h2>
+              <h2 className="text-5xl font-black uppercase tracking-tighter text-white leading-none pr-4">Recent Work</h2>
             </div>
             <p className="text-zinc-500 text-sm max-w-sm italic leading-relaxed">
               A look at some of the best videos I have edited recently.
@@ -133,13 +211,16 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {PROJECTS.map((project, idx) => (
               <div key={project.id} className={`reveal stagger-${(idx % 3) + 1} group cursor-pointer`}>
-                <div className="relative aspect-[9/16] md:aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-white/5 transition-all duration-700 group-hover:border-indigo-500/60 group-hover:shadow-[0_0_50px_-10px_rgba(99,102,241,0.3)]">
+                <div 
+                  onClick={() => setActiveVideo(project.videoUrl)}
+                  className="relative aspect-[9/16] md:aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-white/5 transition-all duration-700 group-hover:border-indigo-500/60 group-hover:shadow-[0_0_50px_-10px_rgba(99,102,241,0.3)]"
+                >
                   <img 
                     src={project.thumbnail} 
                     alt={project.title}
                     className="object-cover w-full h-full transition-all duration-1000 ease-out group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
                   />
-                  {/* Hover Overlay with refined indigo tint */}
+                  {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-indigo-900/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-8 text-center backdrop-blur-[6px]">
                     <div className="p-5 bg-white text-black rounded-full mb-4 translate-y-6 group-hover:translate-y-0 transition-all duration-500 shadow-2xl shadow-indigo-500/20">
                       <PlayCircle className="w-10 h-10" />
@@ -153,8 +234,6 @@ const App: React.FC = () => {
                       {project.category}
                     </span>
                   </div>
-                  
-                  <a href={project.videoUrl} target="_blank" rel="noopener noreferrer" className="absolute inset-0 z-20"></a>
                 </div>
                 
                 <div className="mt-8 px-4 transition-all duration-500 group-hover:translate-x-2">
@@ -167,7 +246,30 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Services Toolkit */}
+      {/* Video Modal Player */}
+      {activeVideo && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 md:p-10 transition-all duration-500">
+          <button 
+            onClick={() => setActiveVideo(null)}
+            className="absolute top-6 right-6 md:top-10 md:right-10 text-white hover:text-indigo-500 transition-colors p-2 glass rounded-full"
+          >
+            <X size={32} />
+          </button>
+          <div className="relative w-full max-w-5xl aspect-video rounded-[2rem] overflow-hidden shadow-2xl shadow-indigo-500/20 glass border-white/10">
+            <iframe
+              className="w-full h-full"
+              src={getEmbedUrl(activeVideo)}
+              title="Video Player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+          <div className="absolute inset-0 -z-10" onClick={() => setActiveVideo(null)}></div>
+        </div>
+      )}
+
+      {/* Services Section */}
       <section id="services" className="py-32 relative">
         <div className="container mx-auto px-6">
           <div className="reveal text-center mb-24">
@@ -186,8 +288,6 @@ const App: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-black mb-4 uppercase tracking-tight text-white group-hover:text-indigo-400 transition-colors">{service.title}</h3>
                 <p className="text-zinc-500 text-xs leading-relaxed font-medium transition-colors group-hover:text-zinc-400">{service.description}</p>
-                
-                {/* Subtle border highlight line */}
                 <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
               </div>
             ))}
@@ -273,7 +373,10 @@ const App: React.FC = () => {
       <footer className="py-20 border-t border-white/5">
         <div className="container mx-auto px-6 flex flex-col items-center text-center">
           <div className="flex flex-col items-center mb-10">
-            <span className="text-2xl font-black text-white font-display uppercase tracking-tighter">Abdy Tahir</span>
+            <div className="w-16 h-16 mb-6 overflow-hidden">
+               <img src={LOGO_URL} alt="Abdy Tahir Logo" className="w-full h-full object-contain" />
+            </div>
+            <span className="inline-block text-2xl font-black text-white font-display uppercase tracking-tighter pr-1">Abdy Tahir</span>
             <p className="text-[9px] text-zinc-600 uppercase font-black tracking-widest mt-3">© {new Date().getFullYear()} – Professional Video Editing</p>
           </div>
           <div className="flex space-x-12">
@@ -292,7 +395,7 @@ const App: React.FC = () => {
             <a 
               key={item.label} 
               href={`#${item.id}`} 
-              onClick={() => setIsMenuOpen(false)} 
+              onClick={(e) => scrollToSection(e, item.id)}
               className="text-6xl font-black uppercase tracking-tighter text-white hover:text-indigo-500 transition-colors"
               style={{transitionDelay: `${idx * 0.1}s`}}
             >
@@ -301,7 +404,7 @@ const App: React.FC = () => {
           ))}
           <a 
             href="#contact" 
-            onClick={() => setIsMenuOpen(false)} 
+            onClick={(e) => scrollToSection(e, 'contact')}
             className="text-6xl font-black uppercase tracking-tighter text-indigo-500 hover:text-white transition-colors"
           >
             Hire Me
