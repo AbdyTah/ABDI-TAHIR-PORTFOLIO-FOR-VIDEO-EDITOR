@@ -1,36 +1,32 @@
-# Abdy Tahir Portfolio
+# Abdy Tahir - Video Editor Portfolio
 
-A professional, high-end single-page portfolio designed for a freelance video editor.
+A cinematic, high-retention focused portfolio for short-form video editors.
 
-## Getting Started
+## 🚀 How to Deploy on Netlify
 
-1.  **Repository Setup**: Push these files to a new GitHub repository.
-2.  **Deployment**: 
-    *   Connect your repository to **Netlify** or **Vercel**.
-    *   **Build Command**: `npm run build`
-    *   **Publish Directory**: `dist` (or `build`)
+1. **GitHub Setup**: Push this entire project to a new repository on GitHub.
+2. **Netlify Connect**: 
+   - Log into Netlify.
+   - Click **"Add new site"** -> **"Import from Git"**.
+   - Select your GitHub repo.
+3. **Build Settings**:
+   - Netlify should automatically detect the settings, but ensure they are:
+     - **Build Command**: `npm run build`
+     - **Publish Directory**: `dist`
+4. **Deploy**: Click "Deploy site" and you're live!
 
-## Customizing Content
+## ✍️ How to Customize
 
-All website content is centralized in `constants.tsx` for easy editing.
+### 1. Change Portfolio Clips
+Open `constants.tsx` and update the `PROJECTS` array. Replace the `thumbnail` URLs with your own images (you can host them on Imgur, Unsplash, or in a local `/images` folder) and the `videoUrl` with your actual YouTube or Vimeo links.
 
-### Replacing Videos
-1. Open `constants.tsx`.
-2. Locate the `PROJECTS` array.
-3. Replace the `thumbnail` and `videoUrl` values with your own.
+### 2. Update Contact Email
+In `constants.tsx`, change `CONTACT_EMAIL` to your professional email. The contact form uses **FormSubmit.co**, so on the first submission, you will receive a verification email from them to activate the inbox.
 
-### Changing Social Links
-1. Open `constants.tsx`.
-2. Locate the `SOCIAL_LINKS` array.
-3. Update the `url` for Instagram, TikTok, and YouTube.
+### 3. Replace Taglines
+Search for "Abdy Tahir" or "Short-Form" in `App.tsx` and `index.html` to change the main headings.
 
-### Setting Your Email
-1. Open `constants.tsx`.
-2. Change the `CONTACT_EMAIL` variable to your actual email address.
-3. The contact form uses **FormSubmit**, so you will receive a verification email from them after the first test submission.
-
-## Design Highlights
-*   **Cinematic Dark Theme**: Optimized for creative professionals.
-*   **Responsive**: Looks great on smartphones, tablets, and desktops.
-*   **Performance**: Lightweight and fast-loading using React + Tailwind CSS.
-*   **Contact Form**: Zero-backend setup using FormSubmit.co.
+## 🎨 Design Info
+- **Framework**: React 19 + Tailwind CSS
+- **Icons**: Lucide-React
+- **Fonts**: Outfit (Headings), Inter (Body)
