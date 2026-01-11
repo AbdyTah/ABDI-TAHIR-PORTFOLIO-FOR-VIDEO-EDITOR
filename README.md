@@ -1,20 +1,36 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Abdy Tahir Portfolio
 
-# Run and deploy your AI Studio app
+A professional, high-end single-page portfolio designed for a freelance video editor.
 
-This contains everything you need to run your app locally.
+## Getting Started
 
-View your app in AI Studio: https://ai.studio/apps/drive/1R4rYLnSgRKOz7SvOTQy34K8Jc1aaOeC1
+1.  **Repository Setup**: Push these files to a new GitHub repository.
+2.  **Deployment**: 
+    *   Connect your repository to **Netlify** or **Vercel**.
+    *   **Build Command**: `npm run build`
+    *   **Publish Directory**: `dist` (or `build`)
 
-## Run Locally
+## Customizing Content
 
-**Prerequisites:**  Node.js
+All website content is centralized in `constants.tsx` for easy editing.
 
+### Replacing Videos
+1. Open `constants.tsx`.
+2. Locate the `PROJECTS` array.
+3. Replace the `thumbnail` and `videoUrl` values with your own.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Changing Social Links
+1. Open `constants.tsx`.
+2. Locate the `SOCIAL_LINKS` array.
+3. Update the `url` for Instagram, TikTok, and YouTube.
+
+### Setting Your Email
+1. Open `constants.tsx`.
+2. Change the `CONTACT_EMAIL` variable to your actual email address.
+3. The contact form uses **FormSubmit**, so you will receive a verification email from them after the first test submission.
+
+## Design Highlights
+*   **Cinematic Dark Theme**: Optimized for creative professionals.
+*   **Responsive**: Looks great on smartphones, tablets, and desktops.
+*   **Performance**: Lightweight and fast-loading using React + Tailwind CSS.
+*   **Contact Form**: Zero-backend setup using FormSubmit.co.
