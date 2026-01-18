@@ -135,7 +135,7 @@ const App: React.FC = () => {
           isLoading ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div className="w-24 h-24 animate-pulse">
+        <div className="w-32 h-32 animate-pulse">
           <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" />
         </div>
       </div>
@@ -143,13 +143,13 @@ const App: React.FC = () => {
       {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-4 shadow-2xl shadow-black/50' : 'bg-transparent py-8'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            <div className="w-10 h-10 transition-transform duration-500 group-hover:scale-110">
-              <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" />
+          <div className="flex items-center space-x-4 group cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <div className="w-14 h-14 transition-transform duration-500 group-hover:scale-110">
+              <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain rounded-lg shadow-lg" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-black tracking-tighter text-white font-display uppercase leading-none block overflow-visible">Abdy Tahir</span>
-              <span className="text-[9px] text-zinc-500 uppercase tracking-[0.2em] font-bold tracking-widest block">Video Editor</span>
+              <span className="text-xl font-black tracking-tighter text-white font-display uppercase leading-none block overflow-visible">Abdy Tahir</span>
+              <span className="text-[10px] text-zinc-500 uppercase tracking-[0.2em] font-bold tracking-widest block">Video Editor</span>
             </div>
           </div>
           
@@ -170,35 +170,70 @@ const App: React.FC = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[95vh] flex items-center justify-center pt-20 overflow-hidden">
-        {/* Refined Background Depth Blobs - Smaller and more scattered */}
+      <section className="relative min-h-[95vh] flex items-center justify-center pt-28 pb-20 overflow-hidden">
+        {/* Refined Background Depth Blobs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-[20%] left-[20%] w-[300px] h-[300px] bg-indigo-600/15 rounded-full blur-[90px] animate-float"></div>
           <div className="absolute bottom-[30%] right-[25%] w-[250px] h-[250px] bg-indigo-500/10 rounded-full blur-[80px] animate-float-reverse"></div>
           <div className="absolute top-[50%] left-[60%] w-[200px] h-[200px] bg-indigo-400/5 rounded-full blur-[100px]"></div>
         </div>
         
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <div className="reveal">
-            <span className="inline-block text-[11px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 border-b border-zinc-800 pb-1">Independent Video Editor</span>
-            <h1 className="text-6xl md:text-[8.5rem] font-black mb-10 tracking-tighter text-white leading-[0.82] uppercase">
-              <span className="inline-block pb-2 overflow-visible">Your Clip.</span> <br />
-              <span className="gradient-text italic inline-block pr-8 pb-4 overflow-visible">My Edit.</span>
-            </h1>
-            
-            <p className="max-w-xl mx-auto text-zinc-400 text-sm md:text-base mb-2 leading-relaxed tracking-wide font-medium">
-              I turn raw footage into professional <span className="text-white">Reels, Shorts, and TikToks.</span>
-            </p>
-            
-            <div className="flex flex-col items-center justify-center mt-12">
-              <a 
-                href="#work" 
-                onClick={(e) => scrollToSection(e, 'work')}
-                className="group px-12 py-5 bg-white text-black rounded-full font-black uppercase tracking-widest text-xs flex items-center justify-center hover:bg-zinc-200 transition-all shadow-xl shadow-white/5"
-              >
-                View My Work
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
-              </a>
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 text-left reveal">
+              <span className="inline-block text-[11px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 border-b border-zinc-800 pb-1">Independent Video Editor</span>
+              <h1 className="text-5xl md:text-[7rem] font-black mb-10 tracking-tighter text-white leading-[0.82] uppercase">
+                <span className="inline-block pb-2 overflow-visible">Your Clip.</span> <br />
+                <span className="gradient-text italic inline-block pr-8 pb-4 overflow-visible">My Edit.</span>
+              </h1>
+              
+              <p className="max-w-lg text-zinc-400 text-sm md:text-base mb-10 leading-relaxed tracking-wide font-medium">
+                I turn raw footage into high-retention <span className="text-white">Reels, Shorts, and TikToks</span> that capture attention and drive growth.
+              </p>
+              
+              <div className="flex flex-wrap gap-4">
+                <a 
+                  href="#work" 
+                  onClick={(e) => scrollToSection(e, 'work')}
+                  className="group px-10 py-5 bg-white text-black rounded-full font-black uppercase tracking-widest text-[10px] flex items-center justify-center hover:bg-zinc-200 transition-all shadow-xl shadow-white/5"
+                >
+                  View My Work
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-2 transition-transform" />
+                </a>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => scrollToSection(e, 'contact')}
+                  className="px-10 py-5 glass text-white rounded-full font-black uppercase tracking-widest text-[10px] flex items-center justify-center hover:bg-white/10 transition-all"
+                >
+                  Let's Chat
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 reveal stagger-2">
+              <div className="relative group mx-auto max-w-[400px]">
+                <div className="absolute inset-0 bg-indigo-600/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div className="relative glass p-4 rounded-[3.5rem] border-white/10 shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
+                  <img 
+                    src={LOGO_URL} 
+                    alt="Featured Graphic" 
+                    className="w-full h-auto rounded-[3rem] shadow-2xl object-cover aspect-square"
+                  />
+                </div>
+                {/* Float elements */}
+                <div className="absolute -top-6 -right-6 p-4 glass rounded-2xl border-white/20 animate-float">
+                   <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-[10px] font-black uppercase tracking-tighter text-white">4K Resolution</span>
+                   </div>
+                </div>
+                <div className="absolute -bottom-6 -left-6 p-4 glass rounded-2xl border-white/20 animate-float-reverse">
+                   <div className="flex items-center space-x-2">
+                      <PlayCircle className="w-4 h-4 text-indigo-400" />
+                      <span className="text-[10px] font-black uppercase tracking-tighter text-white">Dynamic Transitions</span>
+                   </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -400,8 +435,8 @@ const App: React.FC = () => {
       <footer className="py-20 border-t border-white/5">
         <div className="container mx-auto px-6 flex flex-col items-center text-center">
           <div className="flex flex-col items-center mb-10">
-            <div className="w-16 h-16 mb-6">
-               <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain" />
+            <div className="w-24 h-24 mb-6">
+               <img src={LOGO_URL} alt="Logo" className="w-full h-full object-contain rounded-xl shadow-2xl" />
             </div>
             <span className="text-2xl font-black text-white font-display uppercase tracking-tighter block overflow-visible">Abdy Tahir</span>
           </div>
