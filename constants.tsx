@@ -2,7 +2,7 @@ import React from 'react';
 import { Zap, Captions, Aperture, Waves, Instagram, Youtube, Mail } from 'lucide-react';
 import { Project, Service } from './types';
 
-export const CONTACT_EMAIL = "ABDETAHIR468@GMAIL.COM";
+export const CONTACT_EMAIL = "ABDYTAH@GMAIL.COM";
 export const PHONE_NUMBER = "+251927652240";
 
 /**
