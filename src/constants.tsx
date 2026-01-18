@@ -1,0 +1,1 @@
+export const LOGO_URL = "/bg_1.jpg";
