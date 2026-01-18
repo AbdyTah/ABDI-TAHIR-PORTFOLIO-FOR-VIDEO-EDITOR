@@ -6,9 +6,9 @@ export const CONTACT_EMAIL = "ABDETAHIR468@GMAIL.COM";
 export const PHONE_NUMBER = "+251927652240";
 
 /**
- * Site logo URL - using local image added to the repo at root as bg_1.jpg
+ * Site logo URL - using local image added to the repo at root as i can logo.png
  */
-export const LOGO_URL = "/bg_1.jpg";
+export const LOGO_URL = "/i can logo.png";
 
 export const PROJECTS: Project[] = [
   {
