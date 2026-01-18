@@ -6,9 +6,10 @@ export const CONTACT_EMAIL = "ABDETAHIR468@GMAIL.COM";
 export const PHONE_NUMBER = "+251927652240";
 
 /**
- * Local logo file path
+ * Site logo URL - now using Google Drive direct view link
+ * Note: Google Drive hotlinking may be rate-limited or blocked; consider adding the image to the repo/public for reliability.
  */
-export const LOGO_URL = "i%20can%20logo.Png";
+export const LOGO_URL = "https://drive.google.com/uc?export=view&id=13CwP5Fk09hcY_VJjY4qL5AriPyJ571Hs";
 
 export const PROJECTS: Project[] = [
   {
